@@ -6,11 +6,6 @@ var jwt = require("jsonwebtoken");
 
 
 
-router.get("/test", async (req, res) => {
-    console.log("text")
-    res.send("testing api");
-});
-
 // Get all users
 router.get('/', async (req, res) => {
     try {
@@ -29,9 +24,12 @@ router.get('/:id', getUser, (req, res) => {
 // Create a user
 router.post('/', async (req, res) => {
     const user = new User({
-        name: req.body.name,
+        id: req.body,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
         email: req.body.email,
-        password: req.body.password
+        gender: req.body.gender,
+        ip_address: req.body.ip_address
     });
 
     try {
@@ -40,6 +38,24 @@ router.post('/', async (req, res) => {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
+});
+
+
+
+// Create a multiple user
+router.post('/bulkData', async (req, res) => {
+
+    const bulkData = req.body.data;
+
+    User.insertMany(bulkData).then(function () {
+        console.log("Data inserted")  // Success
+    }).catch(function (error) {
+        console.log(error)      // Failure
+        res.status(400).json({ message: err.message });
+    }).then(() => {
+        res.status(201).json({ totalRowsUpdated: bulkData.length });
+    });
+
 });
 
 // Update a user

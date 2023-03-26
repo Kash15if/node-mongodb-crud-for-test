@@ -1,9 +1,13 @@
 const mongoose = require('./dbCon');
 
 const userSchema = new mongoose.Schema({
-    name: String,
+    id: Number,
+    first_name: String,
+    last_name: String,
     email: String,
-    password: String
+    gender: String,
+    ip_address: String
+
 });
 
 module.exports = mongoose.model('User', userSchema);
