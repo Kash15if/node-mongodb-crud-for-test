@@ -24,13 +24,14 @@ router.get('/:id', getUser, (req, res) => {
 // Create a user
 router.post('/', async (req, res) => {
     const user = new User({
-        id: req.body,
+        id: req.body.id,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
         gender: req.body.gender,
         ip_address: req.body.ip_address
     });
+
 
     try {
         const newUser = await user.save();
@@ -45,8 +46,7 @@ router.post('/', async (req, res) => {
 // Create a multiple user
 router.post('/bulkData', async (req, res) => {
 
-    const bulkData = req.body.data;
-
+    const bulkData = req.body;
     User.insertMany(bulkData).then(function () {
         console.log("Data inserted")  // Success
     }).catch(function (error) {
