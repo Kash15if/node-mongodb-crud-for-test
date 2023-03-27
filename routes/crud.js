@@ -59,7 +59,7 @@ router.post('/bulkData', async (req, res) => {
 });
 
 // Update a user
-router.patch('/:id', getUser, async (req, res) => {
+router.patch('/:id', async (req, res) => {
     if (req.body.name != null) {
         res.user.name = req.body.name;
     }
@@ -81,9 +81,25 @@ router.patch('/:id', getUser, async (req, res) => {
 });
 
 // Delete a user
-router.delete('/:id', getUser, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         await res.user.remove();
+        res.json({ message: 'User deleted' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+router.post('/multiple', async (req, res) => {
+
+    console.log(req.body)
+
+    const objects = Object.keys(req.body).map((itemId) => itemId)
+
+    try {
+        User.deleteMany({ _id: { $in: objects } });
         res.json({ message: 'User deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
