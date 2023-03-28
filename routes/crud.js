@@ -98,9 +98,10 @@ router.post('/multiple', async (req, res) => {
 
     const objects = Object.keys(req.body).map((itemId) => itemId)
 
+    console.log(objects)
     try {
-        User.deleteMany({ _id: { $in: objects } });
-        res.json({ message: 'User deleted' });
+        let result = await User.deleteMany({ _id: { $in: objects } })
+        res.json(`${result.deletedCount} document(s) deleted`);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
