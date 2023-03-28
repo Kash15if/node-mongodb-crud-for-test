@@ -60,20 +60,12 @@ router.post('/bulkData', async (req, res) => {
 
 // Update a user
 router.patch('/:id', async (req, res) => {
-    if (req.body.name != null) {
-        res.user.name = req.body.name;
-    }
 
-    if (req.body.email != null) {
-        res.user.email = req.body.email;
-    }
-
-    if (req.body.password != null) {
-        res.user.password = req.body.password;
-    }
+    let idToUpdate = req.params.id;
+    let obj = req.body;
 
     try {
-        const updatedUser = await res.user.save();
+        const updatedUser = await User.findByIdAndUpdate(idToUpdate, obj, { new: true })
         res.json(updatedUser);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -82,12 +74,16 @@ router.patch('/:id', async (req, res) => {
 
 // Delete a user
 router.delete('/:id', async (req, res) => {
+
+    console.log(req.params.id);
+
     try {
-        await res.user.remove();
+        await User.findByIdAndDelete(req.params.id);
         res.json({ message: 'User deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
+
 });
 
 
