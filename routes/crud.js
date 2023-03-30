@@ -88,13 +88,12 @@ router.delete('/:id', async (req, res) => {
 
 
 
-router.post('/multiple', async (req, res) => {
+router.post('/delete-multiple', async (req, res) => {
 
     console.log(req.body)
 
-    const objects = Object.keys(req.body).map((itemId) => itemId)
+    const objects = req.body;
 
-    console.log(objects)
     try {
         let result = await User.deleteMany({ _id: { $in: objects } })
         res.json(`${result.deletedCount} document(s) deleted`);
