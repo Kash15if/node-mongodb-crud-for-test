@@ -27,6 +27,8 @@ app.use(cors({ origin: "*" }));
 const crudRoutes = require("./routes/crud");
 app.use("/crud", crudRoutes);
 
-
+app.get("/", (req, res) => {
+  res.send("tested api")
+})
 
 app.listen(5000);

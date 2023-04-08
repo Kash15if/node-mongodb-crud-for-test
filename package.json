@@ -4,6 +4,7 @@
   "description": "Meal Booking system api in node.js and mssql",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
