@@ -8,6 +8,7 @@ var jwt = require("jsonwebtoken");
 
 // Get all users
 router.get('/', async (req, res) => {
+    // console.log("xxx")
     try {
         const users = await User.find();
         res.json(users);
